@@ -1,72 +1,66 @@
 ########################################################################################
 ### core zsh config
 ########################################################################################
-
-unsetopt nomatch
-export TERM=xterm-256color
-# Source Prezto.
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
- source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+source $HOME/.powerlevel10k
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-fpath=(/usr/local/share/zsh-completions $fpath)
+# secrets
+source $HOME/GoogleDrive/config/shell/sh.sh
 
-DEFAULT_USER=jlorince
+# unsetopt nomatch
+export TERM=xterm-256color
+if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
+    print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
+    command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
+    command git clone https://github.com/zdharma/zinit "$HOME/.zinit/bin" && \
+        print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
+        print -P "%F{160}▓▒░ The clone has failed.%f%b"
+fi
 
-source /Users/jlorince/GoogleDrive/config/shell/.zshenv
-ulimit -n 1000
-source ~/.dotbare/dotbare.plugin.zsh
+source "$HOME/.zinit/bin/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+zinit ice depth=1;
+zinit light romkatv/powerlevel10k
+zinit wait lucid light-mode for \
+  kazhala/dotbare \
+  atload'bindkey -M vicmd "k" history-substring-search-up; bindkey -M vicmd "j" history-substring-search-down' \
+  zsh-users/zsh-history-substring-search \
+  atload'_zsh_autosuggest_start; bindkey -v "^ " autosuggest-accept' \
+  zsh-users/zsh-autosuggestions \
+  atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay; _dotbare_completion_cmd dotbare" \
+  atload"FAST_HIGHLIGHT[chroma-man]=" \
+  zdharma/fast-syntax-highlighting \
+  wfxr/forgit
+[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 
 ########################################################################################
 ### Env
 ########################################################################################
 export EDITOR=nvim
-export PATH="/Users/$USER/GoogleDrive/config/shell/scripts/:$PATH"
 export PATH="/Users/$USER/.gem/ruby/2.3.0/bin/:$PATH"
 export PATH="/usr/local/opt/openssl/bin:$PATH"
 export PATH="/usr/local/sbin:$PATH"
-
-# export CFLAGS="-I$(brew --prefix openssl)/include"
-# export CPPFLAGS="-I$(brew --prefix openssl)/include"
-# export LDFLAGS="-L$(brew --prefix openssl@1.1)/lib"
-# export PKG_CONFIG_PATH="${PKG_CONFIG_PATH} /usr/local/opt/zlib/lib/pkgconfig"
-# export CFLAGS="-I$(brew --prefix openssl@1.1)/include -I$(xcrun --show-sdk-path)/usr/include"
-# export CPPFLAGS="-I$(brew --prefix openssl@1.1)/include -I$(xcrun --show-sdk-path)/usr/include"
-# export LDFLAGS="-L$(brew --prefix openssl)/lib"
-
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 export PYTHON=$(which python)
-# secrets
-source /Users/$USER/GoogleDrive/config/shell/sh.sh
-
-export ANDROID_HOME=$HOME/Library/Android/sdk
-export PATH=$PATH:$ANDROID_HOME/emulator
-export PATH=$PATH:$ANDROID_HOME/tools
-export PATH=$PATH:$ANDROID_HOME/tools/bin
-export PATH=$PATH:$ANDROID_HOME/platform-tools
-
-########################################################################################
-###  Look & Feel
-########################################################################################
-# source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /Users/jlorince/GoogleDrive/config/shell/.custom
+ulimit -n 1000
 
 ########################################################################################
 ###  Autosuggestions
 ########################################################################################
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#888888"
-bindkey '^ ' autosuggest-accept
 
 ########################################################################################
 ###  Git(Hub)
 ########################################################################################
 export REVIEW_BASE=master
-source /Users/$USER/GoogleDrive/config/shell/forgit.plugin.zsh
-source /Users/jlorince/GoogleDrive/config/shell/git_functions.sh
-source /Users/jlorince/GoogleDrive/config/shell/git_function_key_bindings.zsh
-### Basic aliases
 alias git=hub  # Use Hub instead of standard git
 alias gch="git checkout"
 alias gu="git add -u"
@@ -82,11 +76,9 @@ function gp(){
 }
 alias gbl="git branch --sort=-committerdate" # list all branches, ordered by recency
 alias restash="git stash show -p  $1| git apply --reverse" # undo the latest `git stash pop`
-# alias gd="ydiff" # use ydiff instead of standard diff
 alias gds="ydiff -s" # side-by-side ydiff
 alias gdm="git diff master... --name-only"
 
-### Functions
 
 # merge with tip of master
 function mm(){
@@ -100,6 +92,7 @@ function mm(){
 # create a new branch off of master
 function nbm(){
   git checkout master
+  git pull origin master
   git checkout -b $1
 }
 
@@ -137,16 +130,6 @@ function squash(){
   git merge --squash my-branch-old
 }
 
-# Create a pull request from the command line
-function gpr(){
-  squash "${2:-master}"
-  gc $1
-  ffp
-  printf "$(gj) $1\n\n" > pr_desc
-  hub pull-request -F pr_desc -e -c -b "${2:-master}"
-  rm -f pr_desc
-}
-
 # One liner to create a WIP commit of all changes to tracked files
 alias wip="gu && git commit -n -m 'wip'"
 
@@ -167,7 +150,6 @@ alias tree="exa --tree"
 #     result, e.g. ctrl-t and ctrl-r)
 #   - ctrl-y to copy filename to clipboard and close
 #   - ? to toggle preview window
-#   - ctrl-o to open file in GUI_EDITOR
 #   - clrl-e to open file in EDITOR
 source ~/.fzf.zsh
 # export FZF_DEFAULT_COMMAND="git ls-tree -r --name-only HEAD || rg --files"
@@ -180,7 +162,6 @@ export FZF_DEFAULT_OPTS="
     --bind=\"tab:execute($preview_cmd |LESS='-R' less)\"
     --bind \"ctrl-y:execute-silent(echo {} | pbcopy)+abort\"
     --bind '?:toggle-preview'
-    --bind \"ctrl-o:execute-silent($GUI_EDITOR {})+abort\"
     --bind \"ctrl-e:execute-silent($EDITOR {})+abort\"
 "
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3"
@@ -195,13 +176,13 @@ zle     -N     fzf-history-widget-accept
 bindkey '^X^R' fzf-history-widget-accept
 
 # ff -> find files containing text
-#   - enter to open file in GUI_EDITOR
+#   - enter to open file in EDITOR
 #   - inline preview shows only matches plus 10 lines of context, tab opens full preview with matches highlighted
 ff () {
   rg --files-with-matches --no-messages $1 | \
   fzf --preview "highlight -O ansi -l {1} 2> /dev/null | awk 'NR>={2}-10&&NR<={2}+10' | rg --colors 'match:bg:yellow' --ignore-case --pretty --context 10 $1 || rg --ignore-case --pretty --context 10 $1 {1}"  \
     --bind="tab:execute(highlight -O ansi -l {1} 2> /dev/null | rg --colors 'match:bg:yellow' --ignore-case --pretty --passthru $1 |LESS='-R' less)" \
-    --bind "enter:execute-silent($GUI_EDITOR {1})+abort"
+    --bind "enter:execute-silent($EDITOR {1})+abort"
 }
 
 # visual grep for input
@@ -211,7 +192,7 @@ gg () {
   rg --no-heading --line-number $@ . | \
   fzf -0 --delimiter=:  \
     --preview "highlight -O ansi -l {1} 2> /dev/null | awk 'NR>={2}-10&&NR<={2}+10' | rg --colors 'match:bg:yellow' --ignore-case --pretty --context 10 $1 || rg --ignore-case --pretty --context 10 $1 {1}"  \
-    --bind "enter:execute-silent($GUI_EDITOR {1}:{2})+abort" \
+    --bind "enter:execute-silent($EDITOR {1}:{2})+abort" \
     --bind="tab:execute(highlight -O ansi -l {1} 2> /dev/null | rg --colors 'match:bg:yellow' --ignore-case --pretty --passthru $1 |LESS='-R' less +{2}g )"
 }
 
@@ -248,9 +229,6 @@ z() {
 ########################################################################################
 ###  Misc
 ########################################################################################
-
-### the fuck
- eval $(thefuck --alias)
 
 # Make a new directory and CD into it
 function mkcd {
