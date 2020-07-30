@@ -1,3 +1,5 @@
+# zmodload zsh/zprof
+
 ########################################################################################
 ### core zsh config
 ########################################################################################
@@ -39,18 +41,56 @@ zinit wait lucid light-mode for \
   wfxr/forgit
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 
+
 ########################################################################################
-### Env
+### Settings
 ########################################################################################
-export EDITOR=nvim
-export PATH="/Users/$USER/.gem/ruby/2.3.0/bin/:$PATH"
-export PATH="/usr/local/opt/openssl/bin:$PATH"
-export PATH="/usr/local/sbin:$PATH"
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 export PYTHON=$(which python)
-ulimit -n 1000
+#
+########################################################################################
+### Settings
+########################################################################################
+
+# history
+HISTSIZE=50000
+SAVEHIST=10000
+setopt extended_history
+setopt hist_expire_dups_first
+setopt hist_ignore_dups
+setopt hist_ignore_space
+setopt hist_verify
+setopt share_history
+
+# completion
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path ~/.cache/zsh/completion
+zstyle ':completion:*' completer _complete _match _approximate
+zstyle ':completion:*:match:*' original only
+zstyle -e ':completion:*:approximate:*' \
+  max-errors 'reply=($((($#PREFIX+$#SUFFIX)/3))numeric)'
+zstyle ':completion:*' menu select
+zstyle ':completion:*' special-dirs true
+zstyle ':completion:*' list-colors ''
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
+expand-or-complete-with-dots() {
+  [[ -n "$terminfo[rmam]" && -n "$terminfo[smam]" ]] && echoti rmam
+  print -Pn "%{%F{red}......%f%}"
+  [[ -n "$terminfo[rmam]" && -n "$terminfo[smam]" ]] && echoti smam
+
+  zle expand-or-complete
+  zle redisplay
+}
+zle -N expand-or-complete-with-dots
+bindkey "^I" expand-or-complete-with-dots
+zmodload zsh/complist
+LISTMAX=9999
+
+# misc
+setopt nobeep
+setopt ignoreeof
+
 
 ########################################################################################
 ###  Autosuggestions
@@ -133,13 +173,6 @@ function squash(){
 # One liner to create a WIP commit of all changes to tracked files
 alias wip="gu && git commit -n -m 'wip'"
 
-########################################################################################
-###  exa
-########################################################################################
-
-alias ls="exa --git -l --group-directories-first"
-alias recent="exa -l -s modified -r"
-alias tree="exa --tree"
 
 ########################################################################################
 ###  fzf
@@ -154,18 +187,18 @@ alias tree="exa --tree"
 source ~/.fzf.zsh
 # export FZF_DEFAULT_COMMAND="git ls-tree -r --name-only HEAD || rg --files"
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
-preview_cmd='(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'
+preview_cmd='(highlight -O ansi -l {} 2> /dev/null || cat {} || tree {}) 2> /dev/null | head -200'
 export FZF_DEFAULT_OPTS="
     --no-height
     --no-reverse
     --preview=\"$preview_cmd\"
-    --bind=\"tab:execute($preview_cmd |LESS='-R' less)\"
+    --bind \"tab:execute($preview_cmd |LESS='-R' less)\"
     --bind \"ctrl-y:execute-silent(echo {} | pbcopy)+abort\"
     --bind '?:toggle-preview'
     --bind \"ctrl-e:execute-silent($EDITOR {})+abort\"
 "
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3"
-export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
+export FZF_ALT_C_OPTS="--preview 'tree {} | head -200'"
 
 # ctrl-x-r to search history and immediately execute
 fzf-history-widget-accept() {
@@ -286,3 +319,4 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 # [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+# zprof
