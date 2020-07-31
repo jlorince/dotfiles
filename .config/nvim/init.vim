@@ -57,7 +57,7 @@ Plug 'machakann/vim-highlightedyank'
 Plug 'svermeulen/vim-cutlass'
 Plug 'SirVer/ultisnips'
 let g:UltiSnipsExpandTrigger = '<c-j>'
-let g:UltiSnipsSnippetDirectories = ['~/GoogleDrive/config/shell/.config/nvim/UltiSnips', 'UltiSnips']
+let g:UltiSnipsSnippetDirectories = ['~/.config/nvim/UltiSnips', 'UltiSnips']
 Plug 'honza/vim-snippets'
 Plug 'tpope/vim-repeat'
 Plug 'easymotion/vim-easymotion'
@@ -97,7 +97,6 @@ Plug 'moll/vim-bbye'
 map <C-q> :Bdelete<cr>
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-" Plug 'yuki-ycino/fzf-preview.vim', { 'do': ':FzfPreviewInstall' }
 Plug 'ludovicchabant/vim-gutentags'
 let g:gutentags_file_list_command = 'rg --files'
 set statusline+=%{gutentags#statusline()}
@@ -317,16 +316,14 @@ nnoremap <silent> <leader>z :call <sid>zoom()<cr>
 " ============================================================================
 
 nnoremap \ :FzfPreviewProjectGrep<space>
-nnoremap <silent> <Leader>p :FzfPreviewProjectFiles <CR>
-nnoremap <silent> <Leader><Enter>  :FzfPreviewAllBuffers<CR>
-nmap <silent> <Leader>t         :FzfPreviewBufferTags<CR>
-nnoremap <silent> <Leader>j     :FzfPreviewJumps<CR>
-" nmap <silent> <Leader>o        :Vista finder fzf:ctags<CR>
-" nnoremap <silent> <Leader>t        :BTags<CR>
-nnoremap <silent> <Leader>T        :FzfPreviewCtags<CR>
+nnoremap <silent> <Leader>p :CocCommand fzf-preview.ProjectFiles <CR>
+nnoremap <silent> <Leader><Enter>  :CocCommand fzf-preview.AllBuffers<CR>
+nmap <silent> <Leader>t         :CocCommand fzf-preview.VistaBufferCtags<CR>
+nnoremap <silent> <Leader>j     :CocCommand fzf-preview.Jumps<CR>
+" nnoremap <silent> <Leader>T        :CocCommand fzf-preview.VistaCtags<CR>
 nnoremap <silent> <Leader>rg       :Rg <C-R><C-W><CR>
 nnoremap <silent> <Leader>RG       :Rg <C-R><C-A><CR>
 xnoremap <silent> <Leader>rg       :Rg <C-R>"<CR>
-nnoremap <silent> <Leader>`        :FzfPreviewMarks<CR>
+nnoremap <silent> <Leader>`        :CocCommand fzf-preview.Marks<CR>
 nnoremap <silent> <Leader>P        :Commands<CR>
 nnoremap <silent> <Leader>s        :Snippets<CR>

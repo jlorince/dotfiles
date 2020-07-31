@@ -74,16 +74,6 @@ zstyle ':completion:*' special-dirs true
 zstyle ':completion:*' list-colors ''
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
-expand-or-complete-with-dots() {
-  [[ -n "$terminfo[rmam]" && -n "$terminfo[smam]" ]] && echoti rmam
-  print -Pn "%{%F{red}......%f%}"
-  [[ -n "$terminfo[rmam]" && -n "$terminfo[smam]" ]] && echoti smam
-
-  zle expand-or-complete
-  zle redisplay
-}
-zle -N expand-or-complete-with-dots
-bindkey "^I" expand-or-complete-with-dots
 zmodload zsh/complist
 LISTMAX=9999
 
