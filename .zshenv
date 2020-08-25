@@ -13,7 +13,7 @@ ulimit -n 1000
 ###  exa
 ########################################################################################
 
-alias ls="exa --git -l --group-directories-first"
+alias ls="exa -l --group-directories-first"
 alias recent="exa -l -s modified -r"
 alias tree="exa --tree"
 

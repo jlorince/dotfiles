@@ -86,6 +86,8 @@ let g:vista_echo_cursor = 1
 let g:vista_fzf_preview = ['right:50%']
 let g:vista_sidebar_width = 40
 Plug 'dyng/ctrlsf.vim'
+Plug 'mcchrish/nnn.vim'
+Plug 'francoiscabrol/ranger.vim'
 
 " Utils
 Plug 'simnalamburt/vim-mundo'
@@ -93,8 +95,11 @@ set undofile
 set undodir=~/.config/nvim/undo
 Plug 'itspriddle/vim-marked'
 Plug 'tpope/vim-unimpaired'
-Plug 'moll/vim-bbye'
-map <C-q> :Bdelete<cr>
+" Plug 'moll/vim-bbye'
+" map <C-q> :Bdelete<cr>
+Plug 'rbgrouleff/bclose.vim'
+let g:bclose_no_plugin_maps = 1
+map <C-q> :Bclose<cr>
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'ludovicchabant/vim-gutentags'
@@ -315,7 +320,7 @@ nnoremap <silent> <leader>z :call <sid>zoom()<cr>
 " FZF {{{
 " ============================================================================
 
-nnoremap \ :FzfPreviewProjectGrep<space>
+nnoremap \ :CocCommand fzf-preview.ProjectGrep <space>
 nnoremap <silent> <Leader>p :CocCommand fzf-preview.ProjectFiles <CR>
 nnoremap <silent> <Leader><Enter>  :CocCommand fzf-preview.AllBuffers<CR>
 nmap <silent> <Leader>t         :CocCommand fzf-preview.VistaBufferCtags<CR>
