@@ -60,16 +60,16 @@ let g:UltiSnipsExpandTrigger = '<c-j>'
 let g:UltiSnipsSnippetDirectories = ['~/.config/nvim/UltiSnips', 'UltiSnips']
 Plug 'honza/vim-snippets'
 Plug 'tpope/vim-repeat'
-Plug 'easymotion/vim-easymotion'
+" Plug 'easymotion/vim-easymotion'
 Plug 'godlygeek/tabular'
 Plug 'tmhedberg/simpylfold'
 set nofoldenable
 " Plug 'vim-scripts/YankRing.vim'
 Plug 'terryma/vim-expand-region'
 Plug 'wellle/visual-split.vim'
-Plug 'kkoomen/vim-doge'
-let g:doge_doc_standard_python = 'google'
-let g:doge_mapping = '<Leader><Leader>d'
+" Plug 'kkoomen/vim-doge'
+" let g:doge_doc_standard_python = 'google'
+" let g:doge_mapping = '<Leader><Leader>d'
 Plug 'farmergreg/vim-lastplace'
 Plug 'pechorin/any-jump.vim'
 Plug 'tpope/vim-sleuth'
@@ -85,7 +85,7 @@ let g:vista_default_executive = 'ctags'
 let g:vista_echo_cursor = 1
 let g:vista_fzf_preview = ['right:50%']
 let g:vista_sidebar_width = 40
-Plug 'dyng/ctrlsf.vim'
+" Plug 'dyng/ctrlsf.vim'
 Plug 'mcchrish/nnn.vim'
 Plug 'francoiscabrol/ranger.vim'
 
