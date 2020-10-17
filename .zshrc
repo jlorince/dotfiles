@@ -10,6 +10,9 @@ source $HOME/.powerlevel10k
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+  eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+fi
 source $(brew --prefix)/share/zsh/site-functions/_todoist_fzf
 
 # secrets
@@ -56,6 +59,7 @@ export PYTHON=$(which python)
 # history
 HISTSIZE=50000
 SAVEHIST=10000
+HISTFILE=~/.zsh_history
 setopt extended_history
 setopt hist_expire_dups_first
 setopt hist_ignore_dups
@@ -239,7 +243,7 @@ function aliases() {
 ###  Z
 ########################################################################################
 
-. /Users/jlorince/GoogleDrive/config/shell/z.sh
+. ~/.z.sh
 unalias z
 z() {
   if [[ -z "$*" ]]; then

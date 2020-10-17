@@ -1,7 +1,7 @@
-let g:python3_host_prog = '/Users/jlorince/.pyenv/shims/python'
+let g:python3_host_prog = '~/.pyenv/shims/python'
 call plug#begin()
 ""Display
-" Plug 'sickill/vim-monokai'
+Plug 'sickill/vim-monokai'
 Plug 'Yggdroot/indentLine'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -11,7 +11,6 @@ Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 Plug 'knubie/vim-kitty-navigator'
 Plug 'plasticboy/vim-markdown'
 Plug 'valloric/matchtagalways'
-" Plug 'ryanoasis/vim-devicons'
 Plug 'myusuf3/numbers.vim'
 Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
@@ -60,16 +59,9 @@ let g:UltiSnipsExpandTrigger = '<c-j>'
 let g:UltiSnipsSnippetDirectories = ['~/.config/nvim/UltiSnips', 'UltiSnips']
 Plug 'honza/vim-snippets'
 Plug 'tpope/vim-repeat'
-" Plug 'easymotion/vim-easymotion'
 Plug 'godlygeek/tabular'
-Plug 'tmhedberg/simpylfold'
-set nofoldenable
-" Plug 'vim-scripts/YankRing.vim'
 Plug 'terryma/vim-expand-region'
 Plug 'wellle/visual-split.vim'
-" Plug 'kkoomen/vim-doge'
-" let g:doge_doc_standard_python = 'google'
-" let g:doge_mapping = '<Leader><Leader>d'
 Plug 'farmergreg/vim-lastplace'
 Plug 'pechorin/any-jump.vim'
 Plug 'tpope/vim-sleuth'
@@ -95,21 +87,19 @@ set undofile
 set undodir=~/.config/nvim/undo
 Plug 'itspriddle/vim-marked'
 Plug 'tpope/vim-unimpaired'
-" Plug 'moll/vim-bbye'
-" map <C-q> :Bdelete<cr>
 Plug 'rbgrouleff/bclose.vim'
 let g:bclose_no_plugin_maps = 1
 map <C-q> :Bclose<cr>
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'ludovicchabant/vim-gutentags'
-let g:gutentags_file_list_command = 'rg --files'
-set statusline+=%{gutentags#statusline()}
-" generate databases in my cache directory, prevent gtags files polluting my project
-let g:gutentags_cache_dir = expand('~/.cache/tags')
-let g:gutentags_define_advanced_commands = 1
-" change focus to quickfix window after search (optional).
-let g:gutentags_plus_switch = 1
+" let g:gutentags_file_list_command = 'rg --files'
+" set statusline+=%{gutentags#statusline()}
+" " generate databases in my cache directory, prevent gtags files polluting my project
+" let g:gutentags_cache_dir = expand('~/.cache/tags')
+" let g:gutentags_define_advanced_commands = 1
+" " change focus to quickfix window after search (optional).
+" let g:gutentags_plus_switch = 1
 " Plug 'xolox/vim-misc'
 " Plug 'xolox/vim-notes'
 " let g:notes_directories = ['~/GoogleDrive/Notes']
