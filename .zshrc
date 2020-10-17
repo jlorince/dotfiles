@@ -11,7 +11,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-  eval $(/home/linuxbrew/.linuxbrew/bin/brew shelenv)
+  eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 fi
 source $(brew --prefix)/share/zsh/site-functions/_todoist_fzf
 
