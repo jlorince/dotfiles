@@ -13,7 +13,6 @@ fi
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 fi
-source $(brew --prefix)/share/zsh/site-functions/_todoist_fzf
 
 # secrets
 source $HOME/GoogleDrive/config/shell/sh.sh
