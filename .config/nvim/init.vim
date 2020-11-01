@@ -69,9 +69,9 @@ Plug 'cometsong/CommentFrame.vim'
 let g:CommentFrame_SkipDefaultMappings = 1
 
 ""Browsing
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-let g:NERDTreeWinSize=40
-Plug 'Xuyuanp/nerdtree-git-plugin'
+" Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+" let g:NERDTreeWinSize=40
+" Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'liuchengxu/vista.vim'
 let g:vista_default_executive = 'ctags'
 let g:vista_echo_cursor = 1
@@ -93,19 +93,6 @@ map <C-q> :Bclose<cr>
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'ludovicchabant/vim-gutentags'
-" let g:gutentags_file_list_command = 'rg --files'
-" set statusline+=%{gutentags#statusline()}
-" " generate databases in my cache directory, prevent gtags files polluting my project
-" let g:gutentags_cache_dir = expand('~/.cache/tags')
-" let g:gutentags_define_advanced_commands = 1
-" " change focus to quickfix window after search (optional).
-" let g:gutentags_plus_switch = 1
-" Plug 'xolox/vim-misc'
-" Plug 'xolox/vim-notes'
-" let g:notes_directories = ['~/GoogleDrive/Notes']
-" Plug 'metakirby5/codi.vim'
-" Plug 'AlphaMycelium/pathfinder.vim'
-" Plug 'jeetsukumaran/vim-buffergator'
 call plug#end()
 
 "Misc Settings
@@ -196,8 +183,7 @@ highlight Search cterm=underline
 
 
 " Sidebars
-nmap <Leader>b :NERDTreeToggle<cr>
-nmap <Leader>f :NERDTreeFind<cr>
+nmap <Leader>b :CocCommand explorer<cr>
 nmap <C-t> :Vista!!<cr>
 
 " Resize vsplit

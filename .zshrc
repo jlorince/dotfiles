@@ -246,7 +246,7 @@ function aliases() {
 unalias z
 z() {
   if [[ -z "$*" ]]; then
-    cd "$(_z -l 2>&1 | fzf +s --tac --preview '(tree -C {2})'| sed 's/^[0-9,.]* *//')"
+    cd "$(_z -l 2>&1 | fzf +s --tac --preview '(tree -L 3 {2})'| sed 's/^[0-9,.]* *//')"
   else
     _last_z_args="$@"
     _z "$@"
