@@ -92,7 +92,7 @@ let g:bclose_no_plugin_maps = 1
 map <C-q> :Bclose<cr>
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'ludovicchabant/vim-gutentags'
+" Plug 'ludovicchabant/vim-gutentags'
 call plug#end()
 
 "Misc Settings

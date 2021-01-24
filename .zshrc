@@ -112,6 +112,7 @@ alias gbl="git branch --sort=-committerdate" # list all branches, ordered by rec
 alias restash="git stash show -p  $1| git apply --reverse" # undo the latest `git stash pop`
 alias gds="ydiff -s" # side-by-side ydiff
 alias gdm="git diff master... --name-only"
+alias mergeready='git commit --allow-empty -m "[merge-ready]"'
 
 
 # merge with tip of master

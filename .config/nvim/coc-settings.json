@@ -4,5 +4,6 @@
     "python.linting.pylintEnabled": false,
     "python.linting.enabled": true,
     "python.formatting.provider": "black",
-    "javascript.validate.enable": false
+    "javascript.validate.enable": false,
+    "coc.preferences.extensionUpdateCheck": "never"
 }
