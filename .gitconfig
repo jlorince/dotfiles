@@ -1,6 +1,6 @@
 [core]
 	editor = nvim
-	pager = delta --dark
+	; pager = delta --dark
 [alias]
 	conflicted = !nvim +Conflicted
     # list files which have changed since REVIEW_BASE
