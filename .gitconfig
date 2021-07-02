@@ -1,5 +1,6 @@
 [core]
 	editor = nvim
+	ignorecase = false
 	; pager = delta --dark
 [alias]
 	conflicted = !nvim +Conflicted
@@ -20,4 +21,4 @@
 	clean = git-lfs clean -- %f
 [user]
 	name = Jared Lorince
-	email = jlorince@narrativescience.com
+	email = jlorince@hex.tech
